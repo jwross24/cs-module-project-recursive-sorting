@@ -53,12 +53,51 @@ def merge_sort(arr):
 # implement an in-place merge sort algorithm
 def merge_in_place(arr, start, mid, end):
     # Your code here
+    # Left sub-array is arr[start:mid]
+    # Right sub-array is arr[mid+1:end]
+    mid_start = mid + 1
+
+    # The sub-arrays to merge are already sorted
+    if arr[mid] <= arr[mid_start]:
+        return arr
+
+    # Maintain two pointers to track the current locations in both of the merge arrays
+    while start <= mid and mid_start <= end:
+
+        # The first element is in the right place
+        if arr[start] <= arr[mid_start]:
+            start += 1
+        # The first element is not in the right place
+        else:
+            val = arr[mid_start]
+            idx = mid_start
+
+            # Shift the elements between start and mid_start right by 1
+            while idx != start:
+                arr[idx] = arr[idx - 1]
+                idx -= 1
+
+            arr[start] = val
+
+            # Update the pointers forward by 1
+            start += 1
+            mid += 1
+            mid_start += 1
 
     return arr
 
 
 def merge_sort_in_place(arr, l, r):
     # Your code here
+    if l < r:
+        # Find the midpoint of left and right pointers
+        middle = (l + r) // 2
+
+        # Sort the left and right halves
+        merge_sort_in_place(arr, l, middle)
+        merge_sort_in_place(arr, middle + 1, r)
+
+        merge_in_place(arr, l, middle, r)
 
     return arr
 
